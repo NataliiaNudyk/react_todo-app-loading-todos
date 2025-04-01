@@ -15,19 +15,16 @@ export const TodoList: React.FC<Props> = ({
   currentFilter,
 }) => {
   const filteredTodos = todoList.filter(todo => {
-    if (currentFilter === FilterType.All) {
-      return true;
-    }
+    switch (currentFilter) {
+      case FilterType.All:
+        return true;
 
-    if (currentFilter === FilterType.Active) {
-      return !todo.completed;
-    }
+      case FilterType.Active:
+        return !todo.completed;
 
-    if (currentFilter === FilterType.Completed) {
-      return todo.completed;
+      case FilterType.Completed:
+        return todo.completed;
     }
-
-    return true;
   });
 
   return (

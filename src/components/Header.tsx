@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 type Props = {
@@ -8,7 +9,9 @@ export const Header: React.FC<Props> = ({ areAllCompleted }) => (
   <header className="todoapp__header">
     <button
       type="button"
-      className={`todoapp__toggle-all ${areAllCompleted ? 'active' : ''}`}
+      className={classNames('todoapp__toggle-all', {
+        active: areAllCompleted,
+      })}
       data-cy="ToggleAllButton"
     />
 

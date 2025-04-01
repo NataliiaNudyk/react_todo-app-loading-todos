@@ -1,5 +1,6 @@
 import React from 'react';
 import { FilterType } from '../types/FilterType';
+import classNames from 'classnames';
 
 type Props = {
   currentFilter: FilterType;
@@ -9,41 +10,19 @@ type Props = {
 export const TodoFilter: React.FC<Props> = ({ currentFilter, onChange }) => {
   return (
     <nav className="filter" data-cy="Filter">
-      <a
-        href="#/"
-        className={`filter__link ${currentFilter === FilterType.All ? 'selected' : ''}`}
-        data-cy="FilterLinkAll"
-        onClick={e => {
-          e.preventDefault();
-          onChange(FilterType.All);
-        }}
-      >
-        All
-      </a>
-
-      <a
-        href="#/active"
-        className={`filter__link ${currentFilter === FilterType.Active ? 'selected' : ''}`}
-        data-cy="FilterLinkActive"
-        onClick={e => {
-          e.preventDefault();
-          onChange(FilterType.Active);
-        }}
-      >
-        Active
-      </a>
-
-      <a
-        href="#/completed"
-        className={`filter__link ${currentFilter === FilterType.Completed ? 'selected' : ''}`}
-        data-cy="FilterLinkCompleted"
-        onClick={e => {
-          e.preventDefault();
-          onChange(FilterType.Completed);
-        }}
-      >
-        Completed
-      </a>
+      {Object.values(FilterType).map(type => (
+        <a
+          key={type}
+          href="#/"
+          className={classNames('filter__link', {
+            selected: currentFilter === type,
+          })}
+          data-cy={`FilterLink${type}`}
+          onClick={() => onChange(FilterType[type])}
+        >
+          {type}
+        </a>
+      ))}
     </nav>
   );
 };

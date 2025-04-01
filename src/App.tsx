@@ -18,23 +18,16 @@ export const App: React.FC = () => {
   const [currentFilter, setCurrentFilter] = useState(FilterType.All);
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadData = () => {
+  useEffect(() => {
     setIsLoading(true);
     getTodos()
       .then(setTodoList)
       .catch(() => {
         setErrorMessage(ErrorMessages.getError);
-        const timeoutId = setTimeout(() => {
-          setErrorMessage(ErrorMessages.default);
-        }, 3000);
-
-        return () => clearTimeout(timeoutId);
       })
-      .finally(() => setIsLoading(false));
-  };
-
-  useEffect(() => {
-    loadData();
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const activeTodosCount = todoList.filter(todo => !todo.completed).length;
